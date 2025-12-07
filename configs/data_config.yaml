@@ -1,0 +1,123 @@
+# configs/data_config.yaml
+
+# 1. Directories Configuration
+directories:
+  raw_data_path: "dataset/raw/"
+  processed_data_dir: "dataset/processed"
+  featured_data_dir: "dataset/featured"
+  train_path: "train/train.parquet"
+  test_path: "test/test.parquet"
+  val_path: "val/val.parquet"
+
+# 2. Preprocessing Configuration
+preprocess:
+  # 2.1 Define column types
+  column_types:
+    target: "is_churn"
+    id_column: "customer"
+    numerical_features:
+      - "feature_a"
+      - "feature_b"
+      - "feature_c"
+      - "feature_d"
+      - "feature_e"
+      - "feature_f"
+      - "feature_g"
+      - "feature_h"
+      - "feature_i"
+      - "feature_j"
+      - "feature_k"
+      - "feature_l"
+      - "feature_m"
+      - "feature_n"
+      - "feature_o"
+      - "feature_p"
+      - "feature_q"
+      - "feature_r"
+      - "feature_s"
+      - "feature_t"
+      - "feature_u"
+      - "feature_v"
+      - "feature_w"
+      - "feature_x"
+      - "feature_y"
+      - "feature_z"
+    # categorical_features:
+    # Put later in the future
+    date_features:
+      - "partition_date"
+    # features_to_drop: (Put after done doing some EDAs)
+
+  # 2.2 Handling Missing Values
+  imputation:
+    numerical:
+      active_method: "median"
+      options: # There would be several options for handling missing values
+        median:
+          strategy: "median"
+          add_indicator: false 
+        mean:
+          strategy: "mean"
+          add_indicator: false
+        knn:
+          n_neighbors: 5
+          weights: "uniform"
+    # categorical: Later in the future
+    #   strategy: "constant"
+    #   fill_value: "Unknown"
+
+  # 2.3 Handling Outliers
+  outliers:
+    active_method: "capping"
+    options: # There would be several options for outliers
+      capping:
+        threshold: 0.05 # Common Practices
+      z_score:
+        threshold: 3.0
+      iqr:
+        multiplier: 1.5
+      percentile:
+        lower: 0.05
+        upper: 0.95
+      none:
+        pass: true
+  
+  # 2.4 Scaling (Normalization)
+  scaling:
+    active_method: "minmax"
+    options: # There would be several options for scaling
+      minmax:
+        feature_range: [0, 1]
+      standard:
+        with_mean: true
+        with_std: true
+      robust:
+        quantile_range: [25, 75]
+  
+  # 2.5 Imbalance Handling
+  imbalance:
+    active_method: "smote"
+    options: # There would be several options for imbalance handling
+      smote:
+        sampling_strategy: "auto"
+        k_neighbors: 5
+        random_state: 42
+      adasyn:
+        sampling_strategy: "auto"
+        n_neighbors: 5
+        random_state: 42
+      random_under:
+        sampling_strategy: 0.8 # Downsample mayoritas sampai rasio 0.8
+        random_state: 42
+
+# 3. Splitting Configuration
+splitting:
+  time_col: "partition_date"
+  stratify_col: "is_churn"
+  train_split_ratio: 0.8
+  validation_ratio: 0.5
+      
+
+      
+
+      
