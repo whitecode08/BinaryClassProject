@@ -1,0 +1,61 @@
+# =============================================================================
+# MAIN CONFIGURATION - BINARY CLASS CHURN PROJECT
+# =============================================================================
+
+# 1. Project Metadata
+project:
+  name: "BinaryClassification"
+  description: "End-to-End MLOps Pipeline for Binary Classification"
+  version: "1.0.0"
+  author: "whitecode08"
+
+# 2. Global Settings
+# Global seed to ensure reproducibility across numpy, pandas, sklearn
+global_seed: 42 
+env: "dev" # Options: dev, staging, prod
+
+# 3. Pipeline Execution Control
+# Toggle 'true'/'false' to run/skip specific stages
+# Useful for debugging (e.g., skip training, only check data processing)
+pipeline_steps:
+  run_data_ingestion: true       # Load raw data
+  run_data_validation: true      # Check schema & quality (Great Expectations)
+  run_preprocessing: true        # Cleaning, Encoding, Splitting
+  run_feature_engineering: true  # Creation of new features
+  run_model_training: true       # Training loop
+  run_model_evaluation: true     # Generate metrics & plots
+  run_model_registry: false      # Register model to MLflow/Production
+
+# 4. Configuration Paths
+# Pointers to other modular configurations
+config_paths:
+  data_config: "configs/data_config.yaml"
+  model_config: "configs/model_config.yaml"
+
+# 5. Artifacts & Storage Management
+# Central storage location for binary outputs, models, and reports
+artifacts:
+  root_dir: "artifacts/"
+  raw_data: "artifacts/data/raw"
+  processed_data: "artifacts/data/processed"
+  models: "artifacts/models"
+  metrics: "artifacts/metrics"
+  plots: "artifacts/plots"
+
+# 6. Experiment Tracking (MLflow)
+# Settings for automatic experiment tracking
+mlflow:
+  use_mlflow: true
+  tracking_uri: "sqlite:///mlflow.db" # Use local DB or remote server (http://...)
+  experiment_name: "Churn_Experiment_Phase1"
+  run_name: "Baseline_XGBoost"
+  log_models: true
+  log_artifacts: true
+
+# 7. Logging Configuration
+# Standard Python log output settings
+logging:
+  level: "INFO" # DEBUG, INFO, WARNING, ERROR
+  save_to_file: true
+  log_file: "logs/pipeline_execution.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

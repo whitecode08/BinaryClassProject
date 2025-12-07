@@ -2,9 +2,9 @@
 
 # 1. Directories Configuration
 directories:
-  raw_data_path: "dataset/raw/"
-  processed_data_dir: "dataset/processed"
-  featured_data_dir: "dataset/featured"
+  raw_data_path: "artifacts/data/raw/"
+  processed_data_dir: "artifacts/data/processed"
+  featured_data_dir: "artifacts/data/featured"
   train_path: "train/train.parquet"
   test_path: "test/test.parquet"
   val_path: "val/val.parquet"
