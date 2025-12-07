@@ -46,7 +46,12 @@ preprocess:
     # Put later in the future
     date_features:
       - "partition_date"
-    # features_to_drop: (Put after done doing some EDAs)
+    features_to_drop: # (Put after done doing some EDAs)
+      - "feature_a"
+      - "feature_j"
+      - "feature_i"
+      - "feature_g"
+      - "feature_f"
 
   # 2.2 Handling Missing Values
   imputation:
