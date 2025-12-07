@@ -1,18 +1,28 @@
+# configs/model_config.yaml
+
+# 1. Directories Configuration
+directories:
+  model_save_dir: "artifacts/models"
+  metrics_dir: "artifacts/metrics"
+  plots_dir: "artifacts/plots"
+
+# 2. Model Architecture & Hyperparameters
 model:
-  name: churn_v1
-  type: xgboost
+  name: "churn_v1"
+  type: "xgboost"
   objective: "binary:logistic"
-  eval_metric:
-    - auc
-    - aucpr
-    - logloss
+  eval_metrics:
+    - "auc"
+    - "aucpr"
+    - "logloss"
 
-  # hardware
-  tree_method: hist         # hist | approx | gpu_hist
-  device: auto              # auto | cpu | gpu
-  n_jobs: -1
+  # Hardware / System Settings
+  system:
+    tree_method: "hist"         # hist | approx | gpu_hist
+    device: "auto"              # auto | cpu | gpu
+    n_jobs: -1
 
-  # ====== Hyperparameters utama ======
+  # ====== Main Hyperparameters ======
   params:
     max_depth: 6
     learning_rate: 0.005      # eta
@@ -26,70 +36,73 @@ model:
     lambda: 1.0              # L2 regularization
     alpha: 0.0               # L1 regularization
 
-    scale_pos_weight: auto   # auto = dihitung dari rasio kelas; atau nilai numerik
+    # 'auto' means code will calculate (neg_samples / pos_samples)
+    scale_pos_weight: "auto"   
 
     max_delta_step: 0
     grow_policy: "depthwise" # depthwise | lossguide
     importance_type: "gain"
 
-  # ====== Hyperparameter tuning (optional) ======
-  tuning:
-    enabled: true
-    strategy: bayesian        # grid | random | bayesian
-    max_trials: 50
-    cv_folds: 3
-    early_stop_rounds: 20
-    metric_to_optimize: "aucpr"
-    direction: "maximize"
+# 3. Training Strategy (Tuning & Validation)
+tuning:
+  enabled: true
+  strategy: "bayesian"        # grid | random | bayesian
+  max_trials: 50
+  cv_folds: 3
+  early_stop_rounds: 20
+  metric_to_optimize: "aucpr"
+  direction: "maximize"
 
-    search_space:
-      max_depth:
-        type: int
-        low: 3
-        high: 8
-      learning_rate:
-        type: loguniform
-        low: 0.01
-        high: 0.2
-      subsample:
-        type: uniform
-        low: 0.6
-        high: 1.0
-      colsample_bytree:
-        type: uniform
-        low: 0.6
-        high: 1.0
-      min_child_weight:
-        type: int
-        low: 1
-        high: 10
-      gamma:
-        type: uniform
-        low: 0.0
-        high: 5.0
-      lambda:
-        type: loguniform
-        low: 0.1
-        high: 10.0
-      alpha:
-        type: loguniform
-        low: 0.0
-        high: 10.0
+  search_space:
+    max_depth:
+      type: "int"
+      low: 3
+      high: 8
+    learning_rate:
+      type: "loguniform"
+      low: 0.01
+      high: 0.2
+    subsample:
+      type: "uniform"
+      low: 0.6
+      high: 1.0
+    colsample_bytree:
+      type: "uniform"
+      low: 0.6
+      high: 1.0
+    min_child_weight:
+      type: "int"
+      low: 1
+      high: 10
+    gamma:
+      type: "uniform"
+      low: 0.0
+      high: 5.0
+    lambda:
+      type: "loguniform"
+      low: 0.1
+      high: 10.0
+    alpha:
+      type: "loguniform"
+      low: 0.0
+      high: 10.0
 
+# 4. Serialization (Saving Model)
 serialization:
   format: "xgboost_native"    # xgboost_native | pickle | joblib | mlflow
-  save_dir: "models"
   save_best_only: true
-  filename_pattern: "churn_{version}.bin"
+  filename_pattern: "churn_v1.bin" # Will be saved in directories.model_save_dir
 
-feature_importance:
-  enabled: true
-  top_k: 10
-  save_plot: true
-  importance_type: "gain"
+# 5. Explainability & Reports
+reporting:
+  feature_importance:
+    enabled: true
+    top_k: 10
+    save_plot: true
+    importance_type: "gain"
 
-shap:
-  enabled: true
-  background_sample_size: 1000
-  max_display_features: 20
-  save_summary_plot: true
+  shap:
+    enabled: true
+    background_sample_size: 1000
+    max_display_features: 20
+    save_summary_plot: true
