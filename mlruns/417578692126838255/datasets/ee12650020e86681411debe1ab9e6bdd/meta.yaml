@@ -1,0 +1,10 @@
+digest: f70f16d9
+name: validation_1
+profile: '{"features_shape": [1500, 22], "features_size": 33000, "features_nbytes":
+  132000}'
+schema: '{"mlflow_tensorspec": {"features": "[{\"type\": \"tensor\", \"tensor-spec\":
+  {\"dtype\": \"float32\", \"shape\": [-1, 22]}}]", "targets": null}}'
+source: '{"tags": {"mlflow.user": "ASUS", "mlflow.source.name": "c:/Users/ASUS/Documents/Freelance
+  Data Scientist/202512/BinaryClassProject/src/model/model_training.py", "mlflow.source.type":
+  "LOCAL", "mlflow.source.git.commit": "05002f0b49f7902b3ee00e5cdf15ab9ca439a1c5"}}'
+source_type: code

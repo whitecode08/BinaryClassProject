@@ -1,0 +1,15 @@
+stages:
+  data_ingestion:
+    cmd: python src/data/data_ingestion.py --config configs/data_config.yaml
+    deps:
+      - src/data/data_ingestion.py
+      - configs/data_config.yaml
+      - artifacts/data/raw/dummy_dataset.csv
+    params:
+      - configs/data_config.yaml:
+        - splitting  
+        - directories
+    outs:
+      - artifacts/data/processed/train.parquet
+      - artifacts/data/processed/val.parquet
+      - artifacts/data/processed/test.parquet

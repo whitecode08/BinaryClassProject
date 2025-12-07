@@ -14,7 +14,7 @@ preprocess:
   # 2.1 Define column types
   column_types:
     target: "is_churn"
-    id_column: "customer"
+    id_column: "customer_id"
     numerical_features:
       - "feature_a"
       - "feature_b"

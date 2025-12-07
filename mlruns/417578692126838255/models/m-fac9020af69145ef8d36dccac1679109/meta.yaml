@@ -1,0 +1,10 @@
+artifact_location: file:C:/Users/ASUS/Documents/Freelance Data Scientist/202512/BinaryClassProject/mlruns/417578692126838255/models/m-fac9020af69145ef8d36dccac1679109/artifacts
+creation_timestamp: 1765140257805
+experiment_id: '417578692126838255'
+last_updated_timestamp: 1765140277951
+model_id: m-fac9020af69145ef8d36dccac1679109
+model_type: null
+name: model
+source_run_id: 17ac17732a0949e09665870205c095a4
+status: 2
+status_message: null
