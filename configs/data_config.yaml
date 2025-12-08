@@ -89,7 +89,7 @@ preprocess:
   
   # 2.4 Scaling (Normalization)
   scaling:
-    active_method: "minmax"
+    active_method: "none"
     options: # There would be several options for scaling
       minmax:
         feature_range: [0, 1]
@@ -99,28 +99,29 @@ preprocess:
       robust:
         quantile_range: [25, 75]
   
-  # 2.5 Imbalance Handling
-  imbalance:
-    active_method: "smote"
-    options: # There would be several options for imbalance handling
-      smote:
-        sampling_strategy: "auto"
-        k_neighbors: 5
-        random_state: 42
-      adasyn:
-        sampling_strategy: "auto"
-        n_neighbors: 5
-        random_state: 42
-      random_under:
-        sampling_strategy: 0.8 # Downsample mayoritas sampai rasio 0.8
-        random_state: 42
-
 # 3. Splitting Configuration
 splitting:
   time_col: "partition_date"
   stratify_col: "is_churn"
   train_split_ratio: 0.8
   validation_ratio: 0.5
+
+# 4. Balancing Configuration
+imbalance:
+  active_method: "smote"
+  options: # There would be several options for imbalance handling
+    smote:
+      sampling_strategy: "auto"
+      k_neighbors: 5
+      random_state: 42
+    adasyn:
+      sampling_strategy: "auto"
+      n_neighbors: 5
+      random_state: 42
+    random_under:
+      sampling_strategy: 0.8 # Downsample mayoritas sampai rasio 0.8
+      random_state: 42
+
       
 
       
