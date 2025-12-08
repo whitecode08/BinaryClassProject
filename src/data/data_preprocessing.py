@@ -1,3 +1,4 @@
+# 1. Import Libraries
 import argparse
 import yaml
 import pandas as pd
@@ -8,13 +9,12 @@ import joblib
 from pathlib import Path
 from sklearn.impute import SimpleImputer, KNNImputer
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
-from imblearn.over_sampling import SMOTE, ADASYN
-from imblearn.under_sampling import RandomUnderSampler
 
-# Setup Logging
+# 2. Setup Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+# 3. Create End to End Data Preprocessing Class
 class DataPreprocessor:
     def __init__(self, config_path):
         self.config = self._load_config(config_path)
@@ -150,65 +150,6 @@ class DataPreprocessor:
         self.transformers['scaler'] = scaler
         return df
 
-    def handle_imbalance(self, df):
-        """
-        OVERSAMPLING / UNDERSAMPLING.
-        IMPORTANT: This changes the number of data rows.
-        """
-        imbalance_conf = self.preprocess_config['imbalance']
-        method = imbalance_conf['active_method']
-        
-        # Check if target exists (if this is test/inference data, skip)
-        if self.target_col not in df.columns:
-            logger.warning("Target column not found. Skipping imbalance handling.")
-            return df
-        
-        logger.info(f"Handling imbalance using method: {method}")
-        
-        X = df.drop(columns=[self.target_col])
-        y = df[self.target_col]
-
-        # Identify categorical columns (non-numeric) for SMOTE if necessary
-        # However, for simplicity at this stage, we assume all features are already numeric
-        # or SMOTE can handle if specifically configured.
-        
-        sampler = None
-        if method == 'smote':
-            params = imbalance_conf['options']['smote']
-            sampler = SMOTE(
-                sampling_strategy=params['sampling_strategy'],
-                k_neighbors=params['k_neighbors'],
-                random_state=params['random_state']
-            )
-        elif method == 'adasyn':
-            params = imbalance_conf['options']['adasyn']
-            sampler = ADASYN(
-                sampling_strategy=params['sampling_strategy'],
-                n_neighbors=params['n_neighbors'],
-                random_state=params['random_state']
-            )
-        elif method == 'random_under':
-            params = imbalance_conf['options']['random_under']
-            # Float sampling strategy in config must be handled carefully
-            sampler = RandomUnderSampler(
-                sampling_strategy=params['sampling_strategy'],
-                random_state=params['random_state']
-            )
-
-        if sampler:
-            try:
-                X_res, y_res = sampler.fit_resample(X, y)
-                # Reassemble into a DataFrame
-                df_resampled = pd.concat([pd.DataFrame(X_res, columns=X.columns), 
-                                          pd.Series(y_res, name=self.target_col)], axis=1)
-                logger.info(f"Data shape after resampling: {df_resampled.shape}")
-                return df_resampled
-            except Exception as e:
-                logger.error(f"Resampling failed: {e}. Returning original data.")
-                return df
-        
-        return df
-
     def save_data(self, df, output_dir, filename="featured_data.parquet"):
         os.makedirs(output_dir, exist_ok=True)
         path = os.path.join(output_dir, filename)
@@ -234,15 +175,10 @@ class DataPreprocessor:
         df = self.handle_outliers(df)
         df = self.scale_features(df)
         
-        # IMPORTANT: Imbalance handling should ideally be done AFTER splitting
-        # But due to the request "execute completely", I put it here.
-        # If data_ingestion performs splitting later, 
-        # this module must be called separately for Train data only.
-        df = self.handle_imbalance(df)
-        
         # 3. Save
         self.save_data(df, self.dir_config['featured_data_dir'])
 
+# 4. Code Execution
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="configs/data_config.yaml", help="Path to config file")
