@@ -1,0 +1,45 @@
+artifact_path: file:///Users/i.putra/Documents/BinaryClassProject/mlruns/720375391583538017/models/m-1a37c2d1d19e4e68861445de9ec95a7f/artifacts
+flavors:
+  python_function:
+    data: model.ubj
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.13.9
+  xgboost:
+    code: null
+    data: model.ubj
+    model_class: xgboost.sklearn.XGBClassifier
+    model_format: ubj
+    xgb_version: 3.1.2
+is_signature_from_type_hint: false
+mlflow_version: 3.7.0
+model_id: m-1a37c2d1d19e4e68861445de9ec95a7f
+model_size_bytes: 675695
+model_uuid: m-1a37c2d1d19e4e68861445de9ec95a7f
+prompts: null
+run_id: 59af4fdfd04b4afb8e12bff06ea0fd3a
+signature:
+  inputs: '[{"type": "double", "name": "feature_b", "required": true}, {"type": "double",
+    "name": "feature_c", "required": true}, {"type": "double", "name": "feature_d",
+    "required": true}, {"type": "double", "name": "feature_e", "required": true},
+    {"type": "double", "name": "feature_h", "required": true}, {"type": "double",
+    "name": "feature_k", "required": true}, {"type": "double", "name": "feature_l",
+    "required": true}, {"type": "double", "name": "feature_m", "required": true},
+    {"type": "double", "name": "feature_n", "required": true}, {"type": "double",
+    "name": "feature_o", "required": true}, {"type": "double", "name": "feature_p",
+    "required": true}, {"type": "double", "name": "feature_q", "required": true},
+    {"type": "double", "name": "feature_r", "required": true}, {"type": "double",
+    "name": "feature_s", "required": true}, {"type": "double", "name": "feature_t",
+    "required": true}, {"type": "double", "name": "feature_u", "required": true},
+    {"type": "double", "name": "feature_v", "required": true}, {"type": "double",
+    "name": "feature_w", "required": true}, {"type": "double", "name": "feature_x",
+    "required": true}, {"type": "double", "name": "feature_y", "required": true},
+    {"type": "double", "name": "feature_z", "required": true}, {"type": "double",
+    "name": "feature_new_1", "required": true}, {"type": "double", "name": "feature_new_2",
+    "required": true}, {"type": "double", "name": "feature_new_3", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-12-09 06:47:25.516631'

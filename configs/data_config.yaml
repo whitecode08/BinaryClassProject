@@ -73,7 +73,7 @@ preprocess:
 
   # 2.3 Handling Outliers
   outliers:
-    active_method: "capping"
+    active_method: "none"
     options: # There would be several options for outliers
       capping:
         threshold: 0.05 # Common Practices
@@ -108,7 +108,7 @@ splitting:
 
 # 4. Balancing Configuration
 imbalance:
-  active_method: "smote"
+  active_method: "random_under"
   options: # There would be several options for imbalance handling
     smote:
       sampling_strategy: "auto"

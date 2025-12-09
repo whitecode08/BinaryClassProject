@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/i.putra/Documents/BinaryClassProject/mlruns/720375391583538017/72169a1d7c804606855547a62ce8ec42/artifacts
+end_time: 1765262942093
+entry_point_name: ''
+experiment_id: '720375391583538017'
+lifecycle_stage: active
+run_id: 72169a1d7c804606855547a62ce8ec42
+run_name: tasteful-skunk-850
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765262933957
+status: 3
+tags: []
+user_id: i.putra

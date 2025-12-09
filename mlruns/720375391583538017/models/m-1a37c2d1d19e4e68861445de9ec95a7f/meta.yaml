@@ -1,0 +1,10 @@
+artifact_location: file:///Users/i.putra/Documents/BinaryClassProject/mlruns/720375391583538017/models/m-1a37c2d1d19e4e68861445de9ec95a7f/artifacts
+creation_timestamp: 1765262845465
+experiment_id: '720375391583538017'
+last_updated_timestamp: 1765262847476
+model_id: m-1a37c2d1d19e4e68861445de9ec95a7f
+model_type: null
+name: model
+source_run_id: 59af4fdfd04b4afb8e12bff06ea0fd3a
+status: 2
+status_message: null

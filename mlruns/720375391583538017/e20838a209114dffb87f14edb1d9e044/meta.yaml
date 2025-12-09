@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/i.putra/Documents/BinaryClassProject/mlruns/720375391583538017/e20838a209114dffb87f14edb1d9e044/artifacts
+end_time: 1765262812036
+entry_point_name: ''
+experiment_id: '720375391583538017'
+lifecycle_stage: active
+run_id: e20838a209114dffb87f14edb1d9e044
+run_name: enthused-yak-250
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765262807098
+status: 3
+tags: []
+user_id: i.putra

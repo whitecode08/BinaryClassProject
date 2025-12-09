@@ -17,7 +17,7 @@ model:
     - "logloss"
 
   evaluation:       # Evaluation settings after training
-    threshold: 0.5 # Threshold for classification
+    threshold: 0.872 # Threshold for classification
     report_metrics:
       - "accuracy"
       - "precision"
@@ -45,7 +45,7 @@ model:
     lambda: 1.0
     alpha: 0.0
 
-    scale_pos_weight: 1.0
+    scale_pos_weight: "auto" # To handle class imbalance
 
     max_delta_step: 0
     grow_policy: "depthwise"
@@ -55,9 +55,9 @@ model:
 tuning:
   enabled: true
   strategy: "bayesian"
-  max_trials: 20              # Reduced slightly for faster debugging --> You need to remember
+  max_trials: 50              # Reduced slightly for faster debugging --> You need to remember
   cv_folds: 5
-  early_stop_rounds: 3
+  early_stop_rounds: 5
   metric_to_optimize: "auc"
   direction: "maximize"
 

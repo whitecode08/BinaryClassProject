@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 # 3. Create End to End Data Preprocessing Class
 class DataPreprocessor:
+    # 3.1 Initialize with config and first configuration
     def __init__(self, config_path):
         self.config = self._load_config(config_path)
         self.preprocess_config = self.config['preprocess']
@@ -41,13 +42,15 @@ class DataPreprocessor:
             return pd.read_parquet(filepath)
         else:
             raise ValueError("Unsupported file format")
-
+    
+    # 3.2 Drop the unwanted features --> Go to the data_config.yaml to see which features to drop 
     def drop_unwanted_features(self, df):
         logger.info(f"Dropping columns: {self.cols_to_drop}")
         # Only drop if columns exist in the dataframe
         existing_cols = [c for c in self.cols_to_drop if c in df.columns]
         return df.drop(columns=existing_cols)
 
+    # 3.3 Handle Missing Values if There is any missing values.
     def handle_missing_values(self, df):
         """
         Handles missing values based on 'active_method' configuration.
@@ -78,6 +81,7 @@ class DataPreprocessor:
         self.transformers['imputer'] = imputer
         return df
 
+    # 3.4 Handle Outliers if there is any outliers
     def handle_outliers(self, df):
         """
         Handles outliers based on configuration.
@@ -119,9 +123,48 @@ class DataPreprocessor:
                 lower_bound = mean - (threshold * std)
                 upper_bound = mean + (threshold * std)
                 df[col] = np.clip(df[col], lower_bound, upper_bound)
+        else:
+            logger.warning("No valid outlier handling method specified. Skipping.")
 
         return df
+    
+    # 3.5 Create function to feature engineering
+    def feature_engineering(self, df):
+        """
+        Create transformed features from existing columns.
+        Creates feature_new_1, feature_new_2, and feature_new_3 as transformations of existing features.
+        This can be changed based on actual feature names and desired transformations.
+        """
+        logger.info("Starting feature engineering - creating transformed features...")
+        
+        # Get valid numerical columns (excluding dropped ones)
+        valid_num_cols = [c for c in self.num_cols if c in df.columns and c not in self.cols_to_drop]
+        
+        if len(valid_num_cols) < 3:
+            logger.warning(f"Not enough valid columns for transformation. Available: {valid_num_cols}")
+            return df
+        
+        # feature_new_1: Transformation of feature_a (or first available feature)
+        base_col_1 = valid_num_cols[0]  
+        df['feature_new_1'] = np.log1p(np.abs(df[base_col_1]) + 1e-8)
+        logger.info(f"Created feature_new_1 as log transformation of {base_col_1}")
+        
+        # feature_new_2: Transformation of second available feature
+        base_col_2 = valid_num_cols[1]
+        df['feature_new_2'] = df[base_col_2] ** 2
+        logger.info(f"Created feature_new_2 as square transformation of {base_col_2}")
+        
+        # feature_new_3: Transformation of third available feature
+        base_col_3 = valid_num_cols[2]
+        df['feature_new_3'] = np.sqrt(np.abs(df[base_col_3]))
+        logger.info(f"Created feature_new_3 as square root transformation of {base_col_3}")
+        
+        logger.info("Feature engineering completed. Added 3 transformed features.")
+        logger.info(f"Dataset shape after feature engineering: {df.shape}")
+        
+        return df
 
+    # 3.6 Function to scale features
     def scale_features(self, df):
         """
         Data Normalization/Standardization.
@@ -150,6 +193,7 @@ class DataPreprocessor:
         self.transformers['scaler'] = scaler
         return df
 
+    # 3.7 Save Processed Data and Transformers
     def save_data(self, df, output_dir, filename="featured_data.parquet"):
         os.makedirs(output_dir, exist_ok=True)
         path = os.path.join(output_dir, filename)
@@ -161,6 +205,7 @@ class DataPreprocessor:
         joblib.dump(self.transformers, transformers_path)
         logger.info(f"Transformers saved to {transformers_path}")
 
+    # 3.8 Run the entire preprocessing pipeline
     def run(self):
         # 1. Determine input path (can be from raw or argument)
         # As requested: from directories config -> raw_data_path
@@ -173,6 +218,7 @@ class DataPreprocessor:
         df = self.drop_unwanted_features(df)
         df = self.handle_missing_values(df)
         df = self.handle_outliers(df)
+        df = self.feature_engineering(df)
         df = self.scale_features(df)
         
         # 3. Save

@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/i.putra/Documents/BinaryClassProject/mlruns/720375391583538017/a99122e105f74b3baae2605d030084ed/artifacts
+end_time: 1765262981168
+entry_point_name: ''
+experiment_id: '720375391583538017'
+lifecycle_stage: active
+run_id: a99122e105f74b3baae2605d030084ed
+run_name: bouncy-shrimp-521
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765262972108
+status: 3
+tags: []
+user_id: i.putra

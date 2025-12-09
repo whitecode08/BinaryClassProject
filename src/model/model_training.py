@@ -316,11 +316,11 @@ class ModelTrainer:
             
             model = xgb.XGBClassifier(**final_params)
             
-            # We set verbose to 100 to reduce log noise, as requested
+            # We set verbose to 10 to reduce log noise
             model.fit(
                 X_train, y_train,
                 eval_set=[(X_train, y_train), (X_val, y_val)],
-                verbose=100  
+                verbose=10  
             )
 
             # 5. Evaluate & Save

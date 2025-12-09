@@ -1,0 +1,9 @@
+digest: 822b467d
+name: validation_1
+profile: '{"features_shape": [1500, 24], "features_size": 36000, "features_nbytes":
+  144000}'
+schema: '{"mlflow_tensorspec": {"features": "[{\"type\": \"tensor\", \"tensor-spec\":
+  {\"dtype\": \"float32\", \"shape\": [-1, 24]}}]", "targets": null}}'
+source: '{"tags": {"mlflow.user": "i.putra", "mlflow.source.name": "src/model/model_training.py",
+  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "55e23782784735d67614c5fec5cda50e8320913f"}}'
+source_type: code
