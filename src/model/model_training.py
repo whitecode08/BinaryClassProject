@@ -87,7 +87,7 @@ class ModelTrainer:
             raise
 
     # ==========================================
-    #  NEW: Hyperparameter Tuning Logic
+    #  Applying Bayesian Hyperparameter Tuning
     # ==========================================
     def _get_search_space(self, trial):
         """
@@ -198,7 +198,7 @@ class ModelTrainer:
         return best_params
 
     # ==========================================
-    #  Existing Training & Eval Logic
+    #  Training and Evaluation Logic
     # ==========================================
 
     def evaluate_model(self, model, X_test, y_test):

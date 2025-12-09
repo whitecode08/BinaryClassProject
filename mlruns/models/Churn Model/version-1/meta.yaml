@@ -1,0 +1,15 @@
+creation_timestamp: 1765253455585
+current_stage: None
+deployment_job_state: null
+description: ''
+last_updated_timestamp: 1765253455585
+model_id: m-7b7005db065449e2b92db9ce528b6e2e
+name: Churn Model
+run_id: 3e898907ae874f3c8677c6d6e4f5e620
+run_link: ''
+source: models:/m-7b7005db065449e2b92db9ce528b6e2e
+status: READY
+status_message: null
+storage_location: file:///Users/i.putra/Documents/BinaryClassProject/mlruns/871254298009264883/models/m-7b7005db065449e2b92db9ce528b6e2e/artifacts
+user_id: null
+version: 1
