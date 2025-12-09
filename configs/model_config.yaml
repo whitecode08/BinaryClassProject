@@ -8,13 +8,22 @@ directories:
 
 # 2. Model Architecture & Hyperparameters
 model:
-  name: "churn_v1"
+  name: "churn_model"
   type: "xgboost"
   objective: "binary:logistic"
   eval_metrics:
     - "auc"
     - "aucpr"
     - "logloss"
+
+  evaluation:       # Evaluation settings after training
+    threshold: 0.5 # Threshold for classification
+    report_metrics:
+      - "accuracy"
+      - "precision"
+      - "recall"
+      - "f1"
+      - "confusion_matrix"
 
   # Hardware / System Settings
   system:
@@ -25,14 +34,14 @@ model:
   # ====== Main Hyperparameters ======
   params:
     max_depth: 6
-    learning_rate: 0.005
+    learning_rate: 0.001
     n_estimators: 1000
-    subsample: 0.8
-    colsample_bytree: 0.8
-    colsample_bynode: 0.8
+    subsample: 0.72
+    colsample_bytree: 0.5
+    colsample_bynode: 0.1
 
     min_child_weight: 5
-    gamma: 0.0
+    gamma: 0.25
     lambda: 1.0
     alpha: 0.0
 
@@ -46,10 +55,10 @@ model:
 tuning:
   enabled: true
   strategy: "bayesian"
-  max_trials: 20              # Reduced slightly for faster debugging
-  cv_folds: 3
-  early_stop_rounds: 20
-  metric_to_optimize: "aucpr"
+  max_trials: 20              # Reduced slightly for faster debugging --> You need to remember
+  cv_folds: 5
+  early_stop_rounds: 3
+  metric_to_optimize: "auc"
   direction: "maximize"
 
   search_space:

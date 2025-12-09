@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/i.putra/Documents/BinaryClassProject/mlruns/871254298009264883/25d2415b10134a409c9741cbbefb8c6b/artifacts
+end_time: 1765253156574
+entry_point_name: ''
+experiment_id: '871254298009264883'
+lifecycle_stage: active
+run_id: 25d2415b10134a409c9741cbbefb8c6b
+run_name: painted-bee-958
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765253079025
+status: 3
+tags: []
+user_id: i.putra
